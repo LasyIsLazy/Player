@@ -1,4 +1,5 @@
 import { fetch, FetchOptions } from "@tauri-apps/api/http";
+import { PlaylistData } from "./types/playlist";
 
 interface ResData<T> {
   code: string;
@@ -30,7 +31,7 @@ const get = async <T>(url: string, options?: FetchOptions) => {
 };
 export class MusicService {
   playlist() {
-    return get(
+    return get<PlaylistData>(
       "https://app.c.nf.migu.cn/MIGUM3.0/resource/playlist/song/v2.0?pageNo=1&pageSize=50&playlistId=173191649"
     );
   }
