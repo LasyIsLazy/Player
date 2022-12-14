@@ -12,6 +12,7 @@ const getPlayList = async (params: any) => {
 
 <template>
   <div class="container">
+    <router-link to="/">home</router-link>
     <router-link to="/test">test</router-link>
     <router-view />
   </div>
