@@ -4,9 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "pnpm --filter player dev ",
-    "build": "vue-tsc --noEmit && vite build",
+    "dev": "pnpm --filter player-app dev ",
+    "build": "vue-tsc --noEmit && pnpm --filter vite build",
     "preview": "vite preview",
     "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.10",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "typescript": "^4.6.4",
+    "vite": "^4.0.0",
+    "vue-tsc": "^1.0.11",
+    "@tauri-apps/cli": "^1.2.2"
   }
 }

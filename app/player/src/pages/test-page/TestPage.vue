@@ -1,7 +1,6 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import Greet from "./components/Greet.vue";
 import { MusicService } from "music-service";
 const service = new MusicService();
 const getPlayList = async (params: any) => {
@@ -12,8 +11,9 @@ const getPlayList = async (params: any) => {
 
 <template>
   <div class="container">
-    <router-link to="/test">test</router-link>
-    <router-view />
+    xxx
+
+    <button @click="getPlayList">Test</button>
   </div>
 </template>
 
