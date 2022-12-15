@@ -4,16 +4,39 @@
 import { MusicService } from "music-service";
 import { PlaylistData, Song } from "music-service/types/playlist";
 import { ref } from "vue";
+const audioSrc = ref("");
 const service = new MusicService();
 const playlistData = ref<PlaylistData>();
-const getPlayList = async (params: any) => {
+const getPlayList = async () => {
   const res = await service.playlist();
   console.log("res", res);
   playlistData.value = res;
 };
+
+getPlayList();
+const handlePlay = async ({
+  songId,
+  albumId,
+  contentId,
+  resourceType,
+  audioFormats,
+}: Song) => {
+  const res = await service.listenUrl({
+    songId,
+    albumId,
+    lowerQualityContentId: contentId,
+    resourceType,
+    toneFlag: audioFormats.slice(-1)[0].formatType,
+  });
+  console.log("res", res);
+  audioSrc.value = res.url;
+};
 </script>
 
 <template>
+  <div class="player">
+    <audio :src="audioSrc" controls></audio>
+  </div>
   <div class="btn-container">
     <button @click="getPlayList">getPlayList</button>
     <!-- <button @click="getPlayList">getPlayList</button> -->
@@ -28,16 +51,14 @@ const getPlayList = async (params: any) => {
         <div>歌手</div>
         <div>专辑</div>
       </div>
-      <div
-        class="item"
-        v-for="({ songName, singerList, album }, idx) in playlistData.songList"
-      >
+      <div class="item" v-for="(item, idx) in playlistData.songList">
         <div>
           {{ idx }}
         </div>
-        <div>{{ songName }}</div>
-        <div>{{ singerList.map(({ name }) => name).join(" / ") }}</div>
-        <div>{{ album }}</div>
+        <div>{{ item.songName }}</div>
+        <div>{{ item.singerList.map(({ name }) => name).join(" / ") }}</div>
+        <div>{{ item.album }}</div>
+        <div><button @click="handlePlay(item)">Play</button></div>
       </div>
     </div>
   </section>
@@ -50,7 +71,7 @@ const getPlayList = async (params: any) => {
 }
 .playlist .item {
   display: grid;
-  grid-template-columns: 20px 2fr 1fr 1fr;
+  grid-template-columns: 20px 2fr 1fr 1fr 100px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
