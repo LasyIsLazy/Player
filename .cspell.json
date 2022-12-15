@@ -1,7 +1,13 @@
 {
   "version": "0.2",
   "language": "en",
-  "words": ["esbuild", "tauri", "vite"],
-  "ignorePaths": ["packages/music-service/types"]
+  "words": [
+    "esbuild",
+    "pinia",
+    "tauri",
+    "vite"
+  ],
+  "ignorePaths": [
+    "packages/music-service/types"
+  ]
 }
-
