@@ -35,13 +35,21 @@ export class MusicService {
       if (!res.data || res.data?.code !== "000000") {
         throw new RequestError(res.data?.info || "缺少响应数据");
       }
+      console.log("data==============", res.data.data);
       return res.data.data;
     });
   }
 
-  playlist() {
+  playlist(playlistId: number) {
     return this.get<PlaylistData>(
-      "https://app.c.nf.migu.cn/MIGUM3.0/resource/playlist/song/v2.0?pageNo=1&pageSize=50&playlistId=173191649"
+      "https://app.c.nf.migu.cn/MIGUM3.0/resource/playlist/song/v2.0",
+      {
+        query: {
+          pageNo: String(1),
+          pageSize: String(50),
+          playlistId: String(playlistId),
+        },
+      }
     );
   }
   listenUrl(params: {
