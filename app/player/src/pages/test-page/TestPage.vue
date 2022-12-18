@@ -8,7 +8,7 @@ const audioSrc = ref("");
 const service = new MusicService();
 const playlistData = ref<PlaylistData>();
 const getPlayList = async () => {
-  const res = await service.playlist();
+  const res = await service.playlist(173191649);
   console.log("res", res);
   playlistData.value = res;
 };
