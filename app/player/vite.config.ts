@@ -1,6 +1,10 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import { fileURLToPath, URL } from "node:url";
 
+function resolvePath(dir: string) {
+  return fileURLToPath(new URL(dir, import.meta.url));
+}
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
@@ -23,5 +27,10 @@ export default defineConfig({
     minify: !process.env.TAURI_DEBUG ? "esbuild" : false,
     // produce sourcemaps for debug builds
     sourcemap: !!process.env.TAURI_DEBUG,
+  },
+  resolve: {
+    alias: {
+      "@": resolvePath("./src"),
+    },
   },
 });

@@ -2,7 +2,7 @@ import { MusicService } from "music-service";
 import { Song } from "music-service/types/playlist";
 import { defineStore } from "pinia";
 
-interface Collection {
+export interface Collection {
   id: number;
   name: string;
   list: Song[];

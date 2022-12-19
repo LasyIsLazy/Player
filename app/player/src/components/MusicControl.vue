@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { invoke } from "@tauri-apps/api/tauri";
 import { usePlayerStore } from "../stores/player";
 import { useCollectionStore } from "../stores/collection";
 
