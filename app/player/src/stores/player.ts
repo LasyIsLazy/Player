@@ -1,6 +1,6 @@
 import { MusicService } from "music-service";
 import { defineStore } from "pinia";
-import { useCollectionStore } from "./collection";
+import { useCollectionStore, Collection } from "./collection";
 
 interface Song {
   url: string;
@@ -16,6 +16,7 @@ interface State {
   song: Song | null;
   status: PlayStatus;
   volume: number;
+  collection: Collection | null;
 }
 
 export const usePlayerStore = defineStore({
@@ -24,10 +25,24 @@ export const usePlayerStore = defineStore({
     song: null,
     status: PlayStatus.Stop,
     volume: 50,
+    collection: null,
   }),
   actions: {
-    async prepare(songId: string, collectionId: number) {
-      const { getSongInfo } = useCollectionStore();
+    async prepare(songId: string, collectionId?: number) {
+      const { getSongInfo, getCollection } = useCollectionStore();
+      if (collectionId) {
+        const c = getCollection(collectionId);
+        if (!c) {
+          throw new Error(`collectionId ${collectionId} 未找到`);
+        }
+        this.collection = c;
+      } else {
+        if (!this.collection) {
+          throw new Error("当前没有collection");
+        }
+        collectionId = this.collection.id;
+      }
+      collectionId = this.collection.id;
       const song = getSongInfo(songId, collectionId);
       if (!song) {
         throw new Error(
