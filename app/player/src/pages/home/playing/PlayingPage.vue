@@ -4,9 +4,7 @@ import PlayingList from "../../../components/play-list/PlayList.vue";
 </script>
 <template>
   <div class="home-page">
-    <aside>
-      <PlayingList></PlayingList>
-    </aside>
+    <PlayingList></PlayingList>
     <main></main>
     <footer>
       <MusicControl></MusicControl>
@@ -15,6 +13,13 @@ import PlayingList from "../../../components/play-list/PlayList.vue";
 </template>
 
 <style lang="scss">
-aside {
+$footerHeight: 200px;
+main {
+  width: 100vw;
+  height: calc(100vh - $footerHeight);
+}
+footer {
+  width: 100vw;
+  height: $footerHeight;
 }
 </style>

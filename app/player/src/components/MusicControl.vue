@@ -34,8 +34,9 @@ const handleProgress = (val: number) => {
 
 <template>
   <div class="music-control">
-    <div>{{ playerStore.statusText }}</div>
-    <div>{{ playerStore.song?.songName }}</div>
+    <div>
+      {{ playerStore.statusText }}：《{{ playerStore.song?.songName }}》
+    </div>
     <div>{{ playerStore.progress }}</div>
     <div>
       进度：
