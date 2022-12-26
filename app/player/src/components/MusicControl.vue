@@ -18,10 +18,6 @@ init().then(async () => {
   console.log("storeSong", playerStore.song);
 });
 
-const handlePlay = () => {
-  playerStore.play();
-};
-
 const audio = ref<HTMLAudioElement>();
 watch(audio, (el) => {
   if (!el) {
@@ -29,15 +25,47 @@ watch(audio, (el) => {
   }
   el.volume = 0.5;
 });
+
+const handleProgress = (val: number) => {
+  console.log(val);
+  playerStore.seek(val);
+};
 </script>
 
 <template>
   <div class="music-control">
-    <audio
-      :src="playerStore.url"
-      controls
-      @play="handlePlay"
-      ref="audio"
-    ></audio>
+    <div>{{ playerStore.statusText }}</div>
+    <div>{{ playerStore.song?.songName }}</div>
+    <div>{{ playerStore.progress }}</div>
+    <div>
+      进度：
+      <input
+        type="number"
+        :value="playerStore.progress"
+        @change="e => handleProgress((e.target as any).value)"
+      />
+    </div>
+    <div>
+      音量：
+      <input
+        type="number"
+        :value="playerStore.volume"
+        @change="e => playerStore.setVolume((e.target as any).value)"
+      />
+    </div>
+    <div class="control">
+      <button @click="playerStore.switch">Play Or Pause</button>
+      <button @click="playerStore.next">Next</button>
+    </div>
   </div>
 </template>
+<style scoped lang="scss">
+.music-control {
+  text-align: left;
+}
+.control {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 200px);
+  gap: 30px;
+}
+</style>
