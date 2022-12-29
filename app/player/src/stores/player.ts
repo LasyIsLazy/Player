@@ -18,10 +18,11 @@ const service = new MusicService();
 interface State {
   song: Song | null;
   status: PlayStatus;
-  progress: number;
   volume: number;
   collection: Collection | null;
   sound: Howl | null;
+  curTime: number;
+  duration: number;
 }
 
 export const usePlayerStore = defineStore({
@@ -29,10 +30,11 @@ export const usePlayerStore = defineStore({
   state: (): State => ({
     song: null,
     status: PlayStatus.Stop,
-    progress: 0,
     volume: 0.5,
     collection: null,
     sound: null,
+    curTime: 0,
+    duration: 0,
   }),
   actions: {
     async prepare(songId: string, collectionId?: number) {
@@ -78,6 +80,18 @@ export const usePlayerStore = defineStore({
           this.next();
         },
       });
+      const listenProgress = () => {
+        const curTime = this.sound?.seek();
+        const duration = this.sound?.duration();
+        this.curTime = curTime ?? 0;
+        this.duration = duration ?? 0;
+        if (this.status !== PlayStatus.Playing) {
+          this.sound?.once("play", listenProgress);
+          return;
+        }
+        requestAnimationFrame(listenProgress);
+      };
+      listenProgress();
       return res;
     },
     async play() {
@@ -132,7 +146,6 @@ export const usePlayerStore = defineStore({
       this.sound.stop();
       this.sound = null;
       this.song = null;
-      this.progress = 0;
     },
 
     async seek(progress: number) {
@@ -147,7 +160,6 @@ export const usePlayerStore = defineStore({
       }
       const duration = this.sound.duration();
       this.sound.seek(duration * progress);
-      this.progress = progress;
     },
     async setVolume(volume: number) {
       this.volume = volume;
@@ -191,6 +203,9 @@ export const usePlayerStore = defineStore({
         [PlayStatus.Stop]: "已结束",
       };
       return textMap[state.status];
+    },
+    progress(state) {
+      return state.curTime / state.duration;
     },
   },
 });
