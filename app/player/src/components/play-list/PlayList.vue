@@ -23,23 +23,22 @@ const handleCollapse = () => {
     <div class="title">播放列表</div>
     <div class="amount">{{ len }}首歌</div>
     <div class="list">
-      <div class="item flex" v-for="item in playerStore.collection?.list ?? []">
-        <div class="info flex">
-          <div class="name ellipse">{{ item.songName }}</div>
-          <div class="singer ellipse">
-            {{ item.singerList.map((i) => i.name).join("/") }}
-          </div>
+      <template v-for="(item, idx) in playerStore.collection?.list ?? []">
+        <div class="num">{{ idx + 1 }}</div>
+        <div class="name ellipse">{{ item.songName }}</div>
+        <div class="singer ellipse">
+          {{ item.singerList.map((i) => i.name).join("/") }}
         </div>
-        <div class="action flex">
+        <div class="action">
           <button @click="handlePlay(item)">播放</button>
         </div>
-      </div>
+      </template>
     </div>
     <button @click="handleCollapse">收起</button>
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .playing-list {
   position: fixed;
   top: 0;
@@ -53,7 +52,9 @@ const handleCollapse = () => {
   flex-direction: column;
   .list {
     flex: 1;
-    overflow: hidden;
+    overflow: hidden auto;
+    display: grid;
+    grid-template-columns: max-content auto 100px 80px;
   }
 }
 .ellipse {
@@ -70,6 +71,9 @@ const handleCollapse = () => {
 .info {
   flex: 1;
   overflow: hidden;
+}
+.num {
+  flex: 0 0 20px;
 }
 .action {
   flex: 0 0 auto;
