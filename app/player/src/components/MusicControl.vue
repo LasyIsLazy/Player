@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, toRefs, watch } from "vue";
 import { usePlayerStore } from "../stores/player";
 import { useCollectionStore } from "../stores/collection";
 
 const { collectionList, fetchCollectionDetail, init } = useCollectionStore();
 const playerStore = usePlayerStore();
+const { progressText, songName, singerName } = toRefs(playerStore);
+const { switchPlay, next, last } = playerStore;
 
 init().then(async () => {
   const curList = collectionList[0];
@@ -35,12 +37,13 @@ const handleProgress = (val: number) => {
 <template>
   <div class="music-control">
     <div class="cover">
-      <img :src="playerStore.song?.cover" :alt="playerStore.song?.songName" />
+      <img :src="playerStore.song?.cover" :alt="songName" />
     </div>
     <div class="info">
-      {{ playerStore.statusText }}：《{{ playerStore.song?.songName }}》
+      <div class="name">{{ songName }} - {{ singerName }}</div>
+      <div class="progress-text">{{ progressText }}</div>
     </div>
-    <div class="extend-area">各种按钮</div>
+    <div class="extend-area"></div>
     <!-- <div>
       {{ playerStore.statusText }}：《{{ playerStore.song?.songName }}》
     </div>
@@ -62,8 +65,9 @@ const handleProgress = (val: number) => {
       />
     </div> -->
     <div class="control">
-      <button @click="playerStore.switch">Play Or Pause</button>
-      <button @click="playerStore.next">Next</button>
+      <button @click="last">Last</button>
+      <button @click="switchPlay">Play Or Pause</button>
+      <button @click="next">Next</button>
     </div>
   </div>
 </template>
@@ -93,7 +97,7 @@ const handleProgress = (val: number) => {
   left: 50%;
   transform: translate(-50%, -50%);
   display: grid;
-  grid-template-columns: repeat(auto-fill, 200px);
+  grid-template-columns: repeat(3, 200px);
   gap: 30px;
 }
 </style>

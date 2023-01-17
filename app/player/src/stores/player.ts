@@ -36,6 +36,9 @@ export const usePlayerStore = defineStore("player", () => {
   const curTime = ref(0);
   const duration = ref(0);
 
+  const songName = computed(() => song.value?.songName ?? "");
+  // TODO: 歌手
+  const singerName = computed(() => song.value?.songName ?? "歌手");
   const url = computed(() => song.value?.url ?? "");
   const statusText = computed(() => {
     const textMap: Record<PlayStatus, string> = {
@@ -50,6 +53,20 @@ export const usePlayerStore = defineStore("player", () => {
       return 0;
     }
     return curTime.value / duration.value;
+  });
+  const time2text = (time: number) => {
+    return (
+      String(Math.floor(time / 60))
+        .padStart(2, "0")
+        .slice(0, 2) +
+      ":" +
+      String(Math.floor(time % 60))
+        .padStart(2, "0")
+        .slice(0, 2)
+    );
+  };
+  const progressText = computed(() => {
+    return `${time2text(curTime.value)}/${time2text(duration.value)}`;
   });
 
   const prepare = async (songId: string, collectionId?: number) => {
@@ -205,6 +222,9 @@ export const usePlayerStore = defineStore("player", () => {
     await play();
     return song;
   };
+  const last = async () => {
+    // TODO: 上一首
+  };
 
   return {
     song,
@@ -215,9 +235,12 @@ export const usePlayerStore = defineStore("player", () => {
     curTime,
     duration,
 
+    singerName,
+    songName,
     url,
     statusText,
     progress,
+    progressText,
 
     prepare,
     play,
@@ -229,5 +252,6 @@ export const usePlayerStore = defineStore("player", () => {
     setVolume,
     getRandomSong,
     next,
+    last,
   };
 });
