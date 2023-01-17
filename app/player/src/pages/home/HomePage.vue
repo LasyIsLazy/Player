@@ -17,10 +17,10 @@ import SideMenu from "../../components/side-menu/SideMenu.vue";
   height: 100%;
   display: grid;
   grid-template-columns: 250px auto;
-  grid-template-rows: auto 200px;
+  grid-template-rows: auto 100px;
   grid-template-areas:
     "sidebar main"
-    "sidebar footer";
+    "footer footer";
 }
 aside,
 main,

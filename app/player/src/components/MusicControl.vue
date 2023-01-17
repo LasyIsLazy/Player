@@ -34,7 +34,14 @@ const handleProgress = (val: number) => {
 
 <template>
   <div class="music-control">
-    <div>
+    <div class="cover">
+      <img :src="playerStore.song?.cover" :alt="playerStore.song?.songName" />
+    </div>
+    <div class="info">
+      {{ playerStore.statusText }}：《{{ playerStore.song?.songName }}》
+    </div>
+    <div class="extend-area">各种按钮</div>
+    <!-- <div>
       {{ playerStore.statusText }}：《{{ playerStore.song?.songName }}》
     </div>
     <div>{{ playerStore.progress }}</div>
@@ -53,7 +60,7 @@ const handleProgress = (val: number) => {
         :value="playerStore.volume"
         @change="e => playerStore.setVolume((e.target as any).value)"
       />
-    </div>
+    </div> -->
     <div class="control">
       <button @click="playerStore.switch">Play Or Pause</button>
       <button @click="playerStore.next">Next</button>
@@ -62,9 +69,29 @@ const handleProgress = (val: number) => {
 </template>
 <style scoped lang="scss">
 .music-control {
+  padding: 0 20px;
   text-align: left;
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+.cover {
+  width: 60px;
+  height: 60px;
+  > img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.info {
+  margin-right: auto;
 }
 .control {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: grid;
   grid-template-columns: repeat(auto-fill, 200px);
   gap: 30px;
