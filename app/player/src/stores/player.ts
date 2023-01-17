@@ -10,7 +10,7 @@ interface Song {
   cover: string;
   raw: SongDetail;
 }
-enum PlayStatus {
+export enum PlayStatus {
   Stop,
   Playing,
   Paused,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import MusicControl from "../../components/MusicControl.vue";
+import MusicControl from "../../components/music-control/MusicControl.vue";
 import SideMenu from "../../components/side-menu/SideMenu.vue";
 </script>
 <template>

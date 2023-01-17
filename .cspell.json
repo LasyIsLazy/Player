@@ -1,13 +1,10 @@
 {
   "version": "0.2",
   "language": "en",
-  "words": [
-    "esbuild",
-    "pinia",
-    "tauri",
-    "vite"
-  ],
+  "words": ["esbuild", "iconfont", "pinia", "tauri", "vite"],
   "ignorePaths": [
-    "packages/music-service/types"
+    "packages/music-service/types",
+    "app/player/src/assets/iconfont"
   ]
 }
+

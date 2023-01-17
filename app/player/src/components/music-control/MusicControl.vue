@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { ref, toRefs, watch } from "vue";
-import { usePlayerStore } from "../stores/player";
-import { useCollectionStore } from "../stores/collection";
+import { usePlayerStore } from "../../stores/player";
+import { useCollectionStore } from "../../stores/collection";
+import PlayButton from "../icon/PlayIcon.vue";
+import SwitchIcon from "../icon/SwitchIcon.vue";
 
 const { collectionList, fetchCollectionDetail, init } = useCollectionStore();
 const playerStore = usePlayerStore();
-const { progressText, songName, singerName } = toRefs(playerStore);
+const { progressText, songName, singerName, status } = toRefs(playerStore);
 const { switchPlay, next, last } = playerStore;
 
 init().then(async () => {
@@ -65,13 +67,14 @@ const handleProgress = (val: number) => {
       />
     </div> -->
     <div class="control">
-      <button @click="last">Last</button>
-      <button @click="switchPlay">Play Or Pause</button>
-      <button @click="next">Next</button>
+      <SwitchIcon @click="last" type="last"></SwitchIcon>
+      <PlayButton @click="switchPlay" :status="status" />
+      <SwitchIcon @click="next" type="next"></SwitchIcon>
     </div>
   </div>
 </template>
 <style scoped lang="scss">
+$controlIconSize: 40px;
 .music-control {
   padding: 0 20px;
   text-align: left;
@@ -97,7 +100,8 @@ const handleProgress = (val: number) => {
   left: 50%;
   transform: translate(-50%, -50%);
   display: grid;
-  grid-template-columns: repeat(3, 200px);
+  grid-template-columns: repeat(3, $controlIconSize);
+  grid-template-rows: $controlIconSize;
   gap: 30px;
 }
 </style>
