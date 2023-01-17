@@ -88,7 +88,9 @@ $extendIconSize: 30px;
 .music-control {
   padding: 0 20px;
   text-align: left;
-  display: flex;
+  display: grid;
+  grid-template-columns: 60px 1fr max-content;
+  gap: 10px;
   align-items: center;
   position: relative;
   width: 100%;
