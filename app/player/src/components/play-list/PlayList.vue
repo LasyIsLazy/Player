@@ -13,10 +13,6 @@ const handlePlay = async (song: Song) => {
   await playerStore.prepare(song.songId);
   await playerStore.play();
 };
-
-const handleCollapse = () => {
-  visible.value = false;
-};
 </script>
 <template>
   <div class="playing-list" v-show="visible">
@@ -34,7 +30,6 @@ const handleCollapse = () => {
         </div>
       </template>
     </div>
-    <button @click="handleCollapse">收起</button>
   </div>
 </template>
 

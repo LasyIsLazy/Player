@@ -213,6 +213,7 @@ export const usePlayerStore = defineStore("player", () => {
   };
 
   const next = async () => {
+    // TODO: 支持多种模式
     const song = getRandomSong();
     if (!song) {
       return;
