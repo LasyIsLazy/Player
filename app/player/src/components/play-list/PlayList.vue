@@ -46,7 +46,7 @@ const handleCollapse = () => {
   width: 300px;
   background-color: aquamarine;
   z-index: 1;
-  height: 100vh;
+  height: calc(100vh - var(--footer-height));
   text-align: left;
   display: flex;
   flex-direction: column;

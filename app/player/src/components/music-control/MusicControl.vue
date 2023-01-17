@@ -2,8 +2,10 @@
 import { ref, toRefs, watch } from "vue";
 import { usePlayerStore } from "../../stores/player";
 import { useCollectionStore } from "../../stores/collection";
+import Icon from "../icon/Icon.vue";
 import PlayButton from "../icon/PlayIcon.vue";
 import SwitchIcon from "../icon/SwitchIcon.vue";
+import { togglePlayList } from "../play-list";
 
 const { collectionList, fetchCollectionDetail, init } = useCollectionStore();
 const playerStore = usePlayerStore();
@@ -34,6 +36,10 @@ const handleProgress = (val: number) => {
   console.log(val);
   playerStore.seek(val);
 };
+
+const handlePlayList = () => {
+  togglePlayList();
+};
 </script>
 
 <template>
@@ -45,7 +51,9 @@ const handleProgress = (val: number) => {
       <div class="name">{{ songName }} - {{ singerName }}</div>
       <div class="progress-text">{{ progressText }}</div>
     </div>
-    <div class="extend-area"></div>
+    <div class="extend-area">
+      <Icon class="play-list" name="list" @click="handlePlayList"></Icon>
+    </div>
     <!-- <div>
       {{ playerStore.statusText }}：《{{ playerStore.song?.songName }}》
     </div>
@@ -75,6 +83,8 @@ const handleProgress = (val: number) => {
 </template>
 <style scoped lang="scss">
 $controlIconSize: 40px;
+$extendIconAmount: 1;
+$extendIconSize: 30px;
 .music-control {
   padding: 0 20px;
   text-align: left;
@@ -94,6 +104,9 @@ $controlIconSize: 40px;
 .info {
   margin-right: auto;
 }
+.progress-text {
+  user-select: none;
+}
 .control {
   position: absolute;
   top: 50%;
@@ -103,5 +116,17 @@ $controlIconSize: 40px;
   grid-template-columns: repeat(3, $controlIconSize);
   grid-template-rows: $controlIconSize;
   gap: 30px;
+  > * {
+    cursor: pointer;
+  }
+}
+.extend-area {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: repeat($extendIconAmount, $extendIconSize);
+  grid-template-rows: $extendIconSize;
+  > * {
+    cursor: pointer;
+  }
 }
 </style>

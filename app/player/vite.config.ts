@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import autoprefixer from "autoprefixer";
 import { fileURLToPath, URL } from "node:url";
 
 function resolvePath(dir: string) {
@@ -31,6 +32,11 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": resolvePath("./src"),
+    },
+  },
+  css: {
+    postcss: {
+      plugins: [autoprefixer()],
     },
   },
 });

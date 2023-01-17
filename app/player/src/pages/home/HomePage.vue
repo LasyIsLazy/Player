@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import MusicControl from "../../components/music-control/MusicControl.vue";
 import SideMenu from "../../components/side-menu/SideMenu.vue";
+import PlayingList from "@/components/play-list/PlayList.vue";
 </script>
 <template>
   <div class="home-page">
     <aside><SideMenu /></aside>
-    <main>main</main>
+    <main>
+      <PlayingList />
+    </main>
     <footer>
       <MusicControl></MusicControl>
     </footer>
@@ -13,11 +16,12 @@ import SideMenu from "../../components/side-menu/SideMenu.vue";
 </template>
 <style lang="scss" scoped>
 .home-page {
+  --footer-height: 100px;
   width: 100%;
   height: 100%;
   display: grid;
   grid-template-columns: 250px auto;
-  grid-template-rows: auto 100px;
+  grid-template-rows: auto var(--footer-height);
   grid-template-areas:
     "sidebar main"
     "footer footer";
