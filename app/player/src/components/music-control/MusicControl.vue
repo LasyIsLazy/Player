@@ -10,7 +10,7 @@ import { togglePlayList } from "../play-list";
 const { collectionList, fetchCollectionDetail, init } = useCollectionStore();
 const playerStore = usePlayerStore();
 const { progressText, songName, singerName, status } = toRefs(playerStore);
-const { switchPlay, next, last } = playerStore;
+const { switchPlay, next, last, switchNext } = playerStore;
 
 init().then(async () => {
   const curList = collectionList[0];
@@ -19,6 +19,7 @@ init().then(async () => {
   const song = curList.list[0];
 
   const songDetail = await playerStore.prepare(song.songId, curList.id);
+  await switchNext();
   console.log("准备播放", songDetail);
   console.log("url", playerStore.url);
   console.log("storeSong", playerStore.song);
