@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import MusicControl from "@/components/MusicControl.vue";
-import PlayingList from "../../../components/play-list/PlayList.vue";
+import MusicControl from '@/components/MusicControl.vue';
+import PlayingList from '../../../components/play-list/PlayList.vue';
 </script>
 <template>
   <div class="home-page">
-    <PlayingList></PlayingList>
-    <main></main>
+    <PlayingList />
+    <main />
     <footer>
-      <MusicControl></MusicControl>
+      <MusicControl />
     </footer>
   </div>
 </template>

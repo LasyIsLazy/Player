@@ -1,56 +1,60 @@
 <script setup lang="ts">
-import { ref, toRefs, watch } from "vue";
-import { usePlayerStore } from "../../stores/player";
-import { useCollectionStore } from "../../stores/collection";
-import Icon from "../icon/Icon.vue";
-import PlayButton from "../icon/PlayIcon.vue";
-import SwitchIcon from "../icon/SwitchIcon.vue";
-import { togglePlayList } from "../play-list";
-import VolumeControl from "./VolumeControl.vue";
+import { toRefs, watch } from 'vue'
+import { usePlayerStore } from '../../stores/player'
+import { useCollectionStore } from '../../stores/collection'
+import Icon from '../icon/CommonIcon.vue'
+import PlayButton from '../icon/PlayIcon.vue'
+import SwitchIcon from '../icon/SwitchIcon.vue'
+import { togglePlayList } from '../play-list'
+import VolumeControl from './VolumeControl.vue'
 
-const { collectionList, fetchCollectionDetail, init } = useCollectionStore();
-const playerStore = usePlayerStore();
-const { progressText, songName, singerName, status } = toRefs(playerStore);
-const { switchPlay, next, last, switchNext } = playerStore;
+const { collectionList, fetchCollectionDetail, init } = useCollectionStore()
+const playerStore = usePlayerStore()
+const { progressText, songName, singerName, status } = toRefs(playerStore)
+const { switchPlay, next, last, switchNext } = playerStore
 
 watch(status, (val) => {
-  console.log("status", val);
-});
+  console.log('status', val)
+})
 
 init().then(async () => {
-  const curList = collectionList[0];
-  await fetchCollectionDetail(curList.id);
-  console.log("歌单信息已获取");
-  const song = curList.list[0];
+  const curList = collectionList[0]
+  await fetchCollectionDetail(curList.id)
+  console.log('歌单信息已获取')
+  const song = curList.list[0]
 
-  const songDetail = await playerStore.prepare(song.songId, curList.id);
-  await switchNext();
-  console.log("准备播放", songDetail);
-  console.log("url", playerStore.url);
-  console.log("storeSong", playerStore.song);
-});
-
-const handleProgress = (val: number) => {
-  console.log(val);
-  playerStore.seek(val);
-};
+  const songDetail = await playerStore.prepare(song.songId, curList.id)
+  await switchNext()
+  console.log('准备播放', songDetail)
+  console.log('url', playerStore.url)
+  console.log('storeSong', playerStore.song)
+})
 
 const handlePlayList = () => {
-  togglePlayList();
-};
+  togglePlayList()
+}
 </script>
 
 <template>
   <div class="music-control">
     <div class="cover">
-      <img :src="playerStore.song?.cover" :alt="songName" />
+      <img
+        :src="playerStore.song?.cover"
+        :alt="songName"
+      />
     </div>
     <div class="info">
       <div class="name">{{ songName }} - {{ singerName }}</div>
-      <div class="progress-text">{{ progressText }}</div>
+      <div class="progress-text">
+        {{ progressText }}
+      </div>
     </div>
     <div class="extend-area">
-      <Icon class="play-list" name="list" @click="handlePlayList"></Icon>
+      <Icon
+        class="play-list"
+        name="list"
+        @click="handlePlayList"
+      />
       <VolumeControl />
     </div>
     <!-- <div>
@@ -74,9 +78,18 @@ const handlePlayList = () => {
       />
     </div> -->
     <div class="control">
-      <SwitchIcon @click="last" type="last"></SwitchIcon>
-      <PlayButton @click="switchPlay" :status="status" />
-      <SwitchIcon @click="next" type="next"></SwitchIcon>
+      <SwitchIcon
+        type="last"
+        @click="last"
+      />
+      <PlayButton
+        :status="status"
+        @click="switchPlay"
+      />
+      <SwitchIcon
+        type="next"
+        @click="next"
+      />
     </div>
   </div>
 </template>

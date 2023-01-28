@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import MusicControl from "../../components/music-control/MusicControl.vue";
-import SideMenu from "../../components/side-menu/SideMenu.vue";
-import PlayingList from "@/components/play-list/PlayList.vue";
+import MusicControl from '../../components/music-control/MusicControl.vue';
+import SideMenu from '../../components/side-menu/SideMenu.vue';
+import PlayingList from '@/components/play-list/PlayList.vue';
 </script>
 <template>
   <div class="home-page">
@@ -10,7 +10,7 @@ import PlayingList from "@/components/play-list/PlayList.vue";
       <PlayingList />
     </main>
     <footer>
-      <MusicControl></MusicControl>
+      <MusicControl />
     </footer>
   </div>
 </template>

@@ -1,37 +1,41 @@
 <script lang="ts" setup>
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch } from 'vue';
 
 const props = defineProps<{
   progress: number;
-  direction: "vertical" | "horizon";
+  direction: 'vertical' | 'horizon';
 }>();
 const progressBar = ref<HTMLElement>();
 const emit = defineEmits<{
-  (event: "progress-change", value: number): void;
+  (event: 'progress-change', value: number): void;
 }>();
 const handleClick = (e: MouseEvent) => {
   console.log(e);
   console.log(e.y);
   const rect = progressBar.value?.getBoundingClientRect();
   if (!rect) {
-    console.warn("Progress bar is not visible");
+    console.warn('Progress bar is not visible');
     return;
   }
   const { height, y } = rect;
-  console.log("height", height);
-  emit("progress-change", 1 - (e.y - y) / height);
+  console.log('height', height);
+  emit('progress-change', 1 - (e.y - y) / height);
 };
 
 watch(props, (val) => {
-  console.log("progress", val.progress);
+  console.log('progress', val.progress);
 });
 
-const progressPercentage = computed(() => props.progress * 100 + "%");
+const progressPercentage = computed(() => props.progress * 100 + '%');
 </script>
 <template>
-  <div class="progress-bar" @click="(e) => handleClick(e)" ref="progressBar">
-    <div class="fill"></div>
-    <div class="block"></div>
+  <div
+    ref="progressBar"
+    class="progress-bar"
+    @click="(e) => handleClick(e)"
+  >
+    <div class="fill" />
+    <div class="block" />
   </div>
 </template>
 

@@ -1,19 +1,19 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import { MusicService } from "music-service";
-import { PlaylistData, Song } from "music-service/types/playlist";
-import { ref } from "vue";
-const audioSrc = ref("");
-const service = new MusicService();
-const playlistData = ref<PlaylistData>();
+import { MusicService } from 'music-service'
+import { PlaylistData, Song } from 'music-service/types/playlist'
+import { ref } from 'vue'
+const audioSrc = ref('')
+const service = new MusicService()
+const playlistData = ref<PlaylistData>()
 const getPlayList = async () => {
-  const res = await service.playlist(173191649);
-  console.log("res", res);
-  playlistData.value = res;
-};
+  const res = await service.playlist(173191649)
+  console.log('res', res)
+  playlistData.value = res
+}
 
-getPlayList();
+getPlayList()
 const handlePlay = async ({
   songId,
   albumId,
@@ -27,15 +27,18 @@ const handlePlay = async ({
     lowerQualityContentId: contentId,
     resourceType,
     toneFlag: audioFormats.slice(-1)[0].formatType,
-  });
-  console.log("res", res);
-  audioSrc.value = res.url;
-};
+  })
+  console.log('res', res)
+  audioSrc.value = res.url
+}
 </script>
 
 <template>
   <div class="player">
-    <audio :src="audioSrc" controls></audio>
+    <audio
+      :src="audioSrc"
+      controls
+    />
   </div>
   <div class="btn-container">
     <button @click="getPlayList">getPlayList</button>
@@ -46,19 +49,25 @@ const handlePlay = async ({
     <h2>playlist</h2>
     <div class="playlist">
       <div class="item">
-        <div></div>
+        <div />
         <div>歌名</div>
         <div>歌手</div>
         <div>专辑</div>
       </div>
-      <div class="item" v-for="(item, idx) in playlistData.songList">
+      <div
+        v-for="(item, idx) in playlistData.songList"
+        :key="'item' + idx"
+        class="item"
+      >
         <div>
           {{ idx }}
         </div>
         <div>{{ item.songName }}</div>
-        <div>{{ item.singerList.map(({ name }) => name).join(" / ") }}</div>
+        <div>{{ item.singerList.map(({ name }) => name).join(' / ') }}</div>
         <div>{{ item.album }}</div>
-        <div><button @click="handlePlay(item)">Play</button></div>
+        <div>
+          <button @click="handlePlay(item)">Play</button>
+        </div>
       </div>
     </div>
   </section>

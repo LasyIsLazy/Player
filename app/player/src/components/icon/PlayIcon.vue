@@ -1,18 +1,18 @@
 <script lang="ts" setup>
-import { PlayStatus } from "../../stores/player";
-import Icon from "./Icon.vue";
+import { PlayStatus } from '../../stores/player'
+import Icon from './CommonIcon.vue'
 
 withDefaults(
   defineProps<{
-    status: PlayStatus;
+    status: PlayStatus
   }>(),
   {
     status: PlayStatus.Playing,
   }
-);
+)
 </script>
 <template>
-  <Icon :name="status !== PlayStatus.Playing ? 'play' : 'pause'"></Icon>
+  <Icon :name="status !== PlayStatus.Playing ? 'play' : 'pause'" />
 </template>
 <style lang="scss" scoped>
 .play-icon {

@@ -1,17 +1,20 @@
 <script setup lang="ts">
-import { toRefs } from "vue";
-import { usePlayerStore } from "../../stores/player";
-import Icon from "../icon/Icon.vue";
-import ProgressBar from "../progress-bar/ProgressBar.vue";
+import { toRefs } from 'vue'
+import { usePlayerStore } from '../../stores/player'
+import Icon from '../icon/CommonIcon.vue'
+import ProgressBar from '../progress-bar/ProgressBar.vue'
 
-const playerStore = usePlayerStore();
-const { volume } = toRefs(playerStore);
-const { setVolume } = playerStore;
+const playerStore = usePlayerStore()
+const { volume } = toRefs(playerStore)
+const { setVolume } = playerStore
 </script>
 
 <template>
   <div class="volume-control">
-    <Icon name="volume" class="volume-icon" />
+    <Icon
+      name="volume"
+      class="volume-icon"
+    />
     <ProgressBar
       :progress="volume"
       direction="horizon"

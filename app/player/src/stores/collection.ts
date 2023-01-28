@@ -1,17 +1,17 @@
-import { MusicService } from "music-service";
-import { Song } from "music-service/types/playlist";
-import { defineStore } from "pinia";
+import { MusicService } from 'music-service'
+import { Song } from 'music-service/types/playlist'
+import { defineStore } from 'pinia'
 
 export interface Collection {
-  id: number;
-  name: string;
-  list: Song[];
+  id: number
+  name: string
+  list: Song[]
 }
 
-const service = new MusicService();
+const service = new MusicService()
 
 export const useCollectionStore = defineStore({
-  id: "collection",
+  id: 'collection',
   state: () => ({
     collectionList: [] as Collection[],
   }),
@@ -21,39 +21,40 @@ export const useCollectionStore = defineStore({
       this.addCollection({
         id: 173191649,
         list: [],
-        name: "我喜欢的",
-      });
+        name: '我喜欢的',
+      })
     },
     async fetchCollectionDetail(id: number) {
-      const { publishTime, songList, totalCount } = await service.playlist(id);
-      const collection = this.collectionList.find((item) => item.id === id);
+      const { songList } = await service.playlist(id)
+      const collection = this.collectionList.find((item) => item.id === id)
       if (!collection) {
-        throw new Error("未找到对应的collection");
+        throw new Error('未找到对应的collection')
       }
-      collection.list = songList;
+      collection.list = songList
     },
     addCollection(collection: Collection) {
-      this.collectionList.push(collection);
+      this.collectionList.push(collection)
     },
     deleteCollection(id: number) {
-      const idx = this.collectionList.findIndex((item) => item.id === id);
-      this.collectionList.splice(idx, 1);
+      const idx = this.collectionList.findIndex((item) => item.id === id)
+      this.collectionList.splice(idx, 1)
     },
   },
   getters: {
     getCollection() {
       return (id: number) => {
-        return this.collectionList.find((item) => item.id === id);
-      };
+        return this.collectionList.find((item) => item.id === id)
+      }
     },
     getSongInfo() {
       return (songId: string, collectionId: number) => {
-        const c = this.getCollection(collectionId);
+        const c = this.getCollection(collectionId)
         if (!c) {
-          return;
+          return
         }
-        return c.list.find((item) => item.songId === songId);
-      };
+        return c.list.find((item) => item.songId === songId)
+      }
     },
   },
-});
+})
+

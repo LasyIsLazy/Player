@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import Icon from "./Icon.vue";
+import Icon from './CommonIcon.vue'
 
 defineProps<{
-  type: "last" | "next";
-}>();
+  type: 'last' | 'next'
+}>()
 </script>
 <template>
-  <Icon :name="type"></Icon>
+  <Icon :name="type" />
 </template>

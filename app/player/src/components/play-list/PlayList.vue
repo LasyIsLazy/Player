@@ -1,29 +1,39 @@
 <script setup lang="ts">
-import { Song } from "music-service/types/playlist";
-import { computed, ref } from "vue";
-import { playListVisible } from ".";
-import { usePlayerStore } from "../../stores/player";
+import { Song } from 'music-service/types/playlist'
+import { computed } from 'vue'
+import { playListVisible } from '.'
+import { usePlayerStore } from '../../stores/player'
 
-const playerStore = usePlayerStore();
-const len = computed(() => playerStore.collection?.list.length ?? 0);
+const playerStore = usePlayerStore()
+const len = computed(() => playerStore.collection?.list.length ?? 0)
 
-const visible = playListVisible;
+const visible = playListVisible
 
 const handlePlay = async (song: Song) => {
-  await playerStore.prepare(song.songId);
-  await playerStore.play();
-};
+  await playerStore.prepare(song.songId)
+  await playerStore.play()
+}
 </script>
 <template>
-  <div class="playing-list" v-show="visible">
+  <div
+    v-show="visible"
+    class="playing-list"
+  >
     <div class="title">播放列表</div>
     <div class="amount">{{ len }}首歌</div>
     <div class="list">
-      <template v-for="(item, idx) in playerStore.collection?.list ?? []">
-        <div class="num">{{ idx + 1 }}</div>
-        <div class="name ellipse">{{ item.songName }}</div>
+      <template
+        v-for="(item, idx) in playerStore.collection?.list ?? []"
+        :key="'item' + idx"
+      >
+        <div class="num">
+          {{ idx + 1 }}
+        </div>
+        <div class="name ellipse">
+          {{ item.songName }}
+        </div>
         <div class="singer ellipse">
-          {{ item.singerList.map((i) => i.name).join("/") }}
+          {{ item.singerList.map((i) => i.name).join('/') }}
         </div>
         <div class="action">
           <button @click="handlePlay(item)">播放</button>
