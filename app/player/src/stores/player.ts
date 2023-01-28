@@ -204,6 +204,7 @@ export const usePlayerStore = defineStore("player", () => {
     sound.seek(duration * progress);
   };
   const setVolume = (v: number) => {
+    console.log("设置音量", v);
     const sound = playing.value?.sound;
     if (!sound) {
       return;

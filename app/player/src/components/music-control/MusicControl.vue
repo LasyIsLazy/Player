@@ -6,6 +6,7 @@ import Icon from "../icon/Icon.vue";
 import PlayButton from "../icon/PlayIcon.vue";
 import SwitchIcon from "../icon/SwitchIcon.vue";
 import { togglePlayList } from "../play-list";
+import VolumeControl from "./VolumeControl.vue";
 
 const { collectionList, fetchCollectionDetail, init } = useCollectionStore();
 const playerStore = usePlayerStore();
@@ -54,6 +55,7 @@ const handlePlayList = () => {
     </div>
     <div class="extend-area">
       <Icon class="play-list" name="list" @click="handlePlayList"></Icon>
+      <VolumeControl />
     </div>
     <!-- <div>
       {{ playerStore.statusText }}：《{{ playerStore.song?.songName }}》
@@ -84,7 +86,7 @@ const handlePlayList = () => {
 </template>
 <style scoped lang="scss">
 $controlIconSize: 40px;
-$extendIconAmount: 1;
+$extendIconAmount: 2;
 $extendIconSize: 30px;
 .music-control {
   padding: 0 20px;

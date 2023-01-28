@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 defineProps<{
-  name: "pause" | "play" | "next" | "last" | "list";
+  name: "pause" | "play" | "next" | "last" | "list" | "volume";
 }>();
 </script>
 <template>
@@ -11,6 +11,7 @@ defineProps<{
     <use xlink:href="#iconfont-zanting" v-if="name === 'pause'"></use>
     <use xlink:href="#iconfont-bofang" v-if="name === 'play'"></use>
     <use xlink:href="#iconfont-bofangduilie" v-if="name === 'list'"></use>
+    <use xlink:href="#iconfont-yinliang" v-if="name === 'volume'"></use>
     <!-- cspell: enable -->
   </svg>
 </template>
