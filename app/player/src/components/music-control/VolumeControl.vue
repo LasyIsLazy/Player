@@ -36,6 +36,4 @@ const { setVolume } = playerStore;
   width: 30px;
   height: 150px;
 }
-.volume-icon {
-}
 </style>

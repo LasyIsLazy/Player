@@ -13,6 +13,10 @@ const playerStore = usePlayerStore();
 const { progressText, songName, singerName, status } = toRefs(playerStore);
 const { switchPlay, next, last, switchNext } = playerStore;
 
+watch(status, (val) => {
+  console.log("status", val);
+});
+
 init().then(async () => {
   const curList = collectionList[0];
   await fetchCollectionDetail(curList.id);
@@ -24,14 +28,6 @@ init().then(async () => {
   console.log("准备播放", songDetail);
   console.log("url", playerStore.url);
   console.log("storeSong", playerStore.song);
-});
-
-const audio = ref<HTMLAudioElement>();
-watch(audio, (el) => {
-  if (!el) {
-    throw new Error("audio el not found");
-  }
-  el.volume = 0.5;
 });
 
 const handleProgress = (val: number) => {

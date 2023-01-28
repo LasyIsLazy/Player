@@ -186,6 +186,7 @@ export const usePlayerStore = defineStore("player", () => {
     }
     playing.value.sound.stop();
     playing.value = undefined;
+    status.value = PlayStatus.Stop;
     console.log(`stop`, playing.value);
   };
 
@@ -247,6 +248,7 @@ export const usePlayerStore = defineStore("player", () => {
     }
     await prepare(song.songId);
     await switchNext();
+    await play();
     return song;
   };
   const last = async () => {
