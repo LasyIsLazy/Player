@@ -1,37 +1,36 @@
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue'
 
 const props = defineProps<{
-  progress: number;
-  direction: 'vertical' | 'horizon';
-}>();
-const progressBar = ref<HTMLElement>();
+  progress: number
+  direction: 'vertical' | 'horizon'
+}>()
+const progressBar = ref<HTMLElement>()
 const emit = defineEmits<{
-  (event: 'progress-change', value: number): void;
-}>();
+  (event: 'progress-change', value: number): void
+}>()
 const handleClick = (e: MouseEvent) => {
-  console.log(e);
-  console.log(e.y);
-  const rect = progressBar.value?.getBoundingClientRect();
+  console.log(e)
+  console.log(e.y)
+  const rect = progressBar.value?.getBoundingClientRect()
   if (!rect) {
-    console.warn('Progress bar is not visible');
-    return;
+    console.warn('Progress bar is not visible')
+    return
   }
-  const { height, y } = rect;
-  console.log('height', height);
-  emit('progress-change', 1 - (e.y - y) / height);
-};
+  const { width, height, x, y } = rect
+  const per =
+    props.direction === 'vertical' ? 1 - (e.y - y) / height : (e.x - x) / width
+  console.log('修改进度', per)
+  emit('progress-change', per)
+}
 
-watch(props, (val) => {
-  console.log('progress', val.progress);
-});
-
-const progressPercentage = computed(() => props.progress * 100 + '%');
+const progressPercentage = computed(() => props.progress * 100 + '%')
 </script>
 <template>
   <div
     ref="progressBar"
     class="progress-bar"
+    :class="direction"
     @click="(e) => handleClick(e)"
   >
     <div class="fill" />
@@ -42,13 +41,23 @@ const progressPercentage = computed(() => props.progress * 100 + '%');
 <style lang="scss">
 .progress-bar {
   position: relative;
-  background-color: brown;
+  background-color: grey;
+}
+.horizon {
+  .fill {
+    width: v-bind(progressPercentage);
+    height: 100%;
+  }
+}
+.vertical {
+  .fill {
+    width: 100%;
+    height: v-bind(progressPercentage);
+  }
 }
 .fill {
   position: absolute;
   bottom: 0;
-  width: 100%;
-  height: v-bind(progressPercentage);
   background-color: aqua;
 }
 </style>

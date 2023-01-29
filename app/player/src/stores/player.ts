@@ -191,6 +191,10 @@ export const usePlayerStore = defineStore('player', () => {
     console.log('stop', playing.value)
   }
 
+  /**
+   * 跳转播放进度
+   * @param progress 要跳转的进度。如：0.5
+   */
   const seek = (progress: number) => {
     if (progress > 1) {
       progress = 1

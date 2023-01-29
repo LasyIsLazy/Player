@@ -7,11 +7,13 @@ import PlayButton from '../icon/PlayIcon.vue'
 import SwitchIcon from '../icon/SwitchIcon.vue'
 import { togglePlayList } from '../play-list'
 import VolumeControl from './VolumeControl.vue'
+import ProgressBar from '../progress-bar/ProgressBar.vue'
 
 const { collectionList, fetchCollectionDetail, init } = useCollectionStore()
 const playerStore = usePlayerStore()
-const { progressText, songName, singerName, status } = toRefs(playerStore)
-const { switchPlay, next, last, switchNext } = playerStore
+const { progressText, songName, singerName, status, progress } =
+  toRefs(playerStore)
+const { switchPlay, next, last, switchNext, seek } = playerStore
 
 watch(status, (val) => {
   console.log('status', val)
@@ -57,26 +59,12 @@ const handlePlayList = () => {
       />
       <VolumeControl />
     </div>
-    <!-- <div>
-      {{ playerStore.statusText }}：《{{ playerStore.song?.songName }}》
-    </div>
-    <div>{{ playerStore.progress }}</div>
-    <div>
-      进度：
-      <input
-        type="number"
-        :value="playerStore.progress"
-        @change="e => handleProgress((e.target as any).value)"
-      />
-    </div>
-    <div>
-      音量：
-      <input
-        type="number"
-        :value="playerStore.volume"
-        @change="e => playerStore.setVolume((e.target as any).value)"
-      />
-    </div> -->
+    <ProgressBar
+      direction="horizon"
+      :progress="progress"
+      class="play-progress"
+      @progress-change="seek"
+    ></ProgressBar>
     <div class="control">
       <SwitchIcon
         type="last"
@@ -142,5 +130,12 @@ $extendIconSize: 30px;
   > * {
     cursor: pointer;
   }
+}
+.play-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
 }
 </style>
