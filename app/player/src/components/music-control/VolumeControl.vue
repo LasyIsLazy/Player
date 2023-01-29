@@ -17,7 +17,7 @@ const { setVolume } = playerStore
     />
     <ProgressBar
       :progress="volume"
-      direction="horizon"
+      direction="column-reverse"
       class="progress"
       @progress-change="setVolume"
     />
@@ -35,8 +35,10 @@ const { setVolume } = playerStore
   display: var(--hover-display);
   position: absolute;
   top: 0;
-  transform: translateY(-100%);
-  width: 30px;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  width: 10px;
   height: 150px;
+  z-index: 1;
 }
 </style>

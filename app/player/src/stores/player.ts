@@ -107,6 +107,9 @@ export const usePlayerStore = defineStore('player', () => {
       onend: () => {
         next()
       },
+      onload: () => {
+        console.log('howl onload')
+      },
     })
     nextPlay.value = {
       data: {
@@ -120,27 +123,37 @@ export const usePlayerStore = defineStore('player', () => {
       },
       sound,
     }
+
+    return res
+  }
+
+  /**
+   * 播放
+   */
+  const play = () => {
+    if (!playing.value) {
+      return
+    }
+
     const listenProgress = () => {
-      curTime.value = sound?.seek() ?? 0
-      duration.value = sound?.duration() ?? 0
+      curTime.value = sound.seek() ?? 0
+      duration.value = sound.duration() ?? 0
+      console.log('howl progress')
       if (status.value !== PlayStatus.Playing) {
-        sound?.once('play', listenProgress)
+        sound.once('play', listenProgress)
         return
       }
       requestAnimationFrame(listenProgress)
     }
     listenProgress()
-    return res
-  }
-  const play = () => {
-    if (!playing.value) {
-      return
-    }
+
     status.value = PlayStatus.Playing
 
+    const sound = playing.value.sound
     // 实际播放
-    playing.value.sound.play()
+    sound.play()
     console.log('play', playing.value)
+
     return playing.value
   }
 
@@ -206,8 +219,9 @@ export const usePlayerStore = defineStore('player', () => {
     if (!sound) {
       return
     }
-    const duration = sound.duration()
-    sound.seek(duration * progress)
+    curTime.value = duration.value * progress
+    console.log(`seek ${curTime.value}/${duration.value}`)
+    sound.seek(curTime.value)
   }
   const setVolume = (v: number) => {
     console.log('设置音量', v)
@@ -242,6 +256,10 @@ export const usePlayerStore = defineStore('player', () => {
 
     // 设置变量
     playing.value = nextPlay.value
+    curTime.value = nextPlay.value.sound.seek()
+    duration.value = nextPlay.value.sound.duration()
+    // FIXME: 这里是 0
+    console.log(`已获取duration ${duration.value}`)
     nextPlay.value = undefined
   }
 

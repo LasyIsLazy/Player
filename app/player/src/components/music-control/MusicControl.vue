@@ -60,7 +60,7 @@ const handlePlayList = () => {
       <VolumeControl />
     </div>
     <ProgressBar
-      direction="horizon"
+      direction="row"
       :progress="progress"
       class="play-progress"
       @progress-change="seek"
