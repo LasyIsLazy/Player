@@ -12,8 +12,6 @@ module.exports = {
   // For <script>
   parserOptions: {
     parser: '@typescript-eslint/parser',
-    // tsconfigRootDir: __dirname,
-    // project: ['./tsconfig.json'],
   },
   ignorePatterns: ['.eslintrc.cjs'],
   rules: {
