@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { toRefs } from 'vue'
 import { usePlayerStore } from '../../stores/player'
-import Icon from '../icon/CommonIcon.vue'
+import CommonIcon from '../icon/CommonIcon.vue'
 import ProgressBar from '../progress-bar/ProgressBar.vue'
 
 const playerStore = usePlayerStore()
@@ -11,7 +11,7 @@ const { setVolume } = playerStore
 
 <template>
   <div class="volume-control">
-    <Icon
+    <CommonIcon
       name="volume"
       class="volume-icon"
     />

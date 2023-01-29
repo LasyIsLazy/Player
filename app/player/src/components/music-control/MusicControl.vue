@@ -2,7 +2,7 @@
 import { toRefs, watch } from 'vue'
 import { usePlayerStore } from '../../stores/player'
 import { useCollectionStore } from '../../stores/collection'
-import Icon from '../icon/CommonIcon.vue'
+import CommonIcon from '../icon/CommonIcon.vue'
 import PlayButton from '../icon/PlayIcon.vue'
 import SwitchIcon from '../icon/SwitchIcon.vue'
 import { togglePlayList } from '../play-list'
@@ -52,7 +52,7 @@ const handlePlayList = () => {
       </div>
     </div>
     <div class="extend-area">
-      <Icon
+      <CommonIcon
         class="play-list"
         name="list"
         @click="handlePlayList"
