@@ -3,7 +3,7 @@
     "beforeDevCommand": "pnpm dev",
     "beforeBuildCommand": "pnpm build",
     "devPath": "http://localhost:1420",
-    "distDir": "../dist",
+    "distDir": "../app/player/dist",
     "withGlobalTauri": false
   },
   "package": {
@@ -40,7 +40,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.lasy.player",
       "longDescription": "",
       "macOS": {
         "entitlements": null,

@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm --filter player-app dev ",
-    "build": "vue-tsc --noEmit && pnpm --filter vite build",
-    "preview": "vite preview",
+    "build": "pnpm --filter player-app build",
+    "preview": "pnpm --filter player-app preview",
     "tauri": "tauri",
     "lint": "eslint --ext .ts,.vue {app,packages}/",
     "prepare": "husky install"
