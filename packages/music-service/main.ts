@@ -9,6 +9,7 @@ interface ResData<T> {
 }
 
 class RequestError extends Error {}
+class MiGuError extends Error {}
 
 export class MusicService {
   private client: Client | null
@@ -27,7 +28,7 @@ export class MusicService {
         throw new RequestError(String(res.status))
       }
       if (!res.data || res.data?.code !== '000000') {
-        throw new RequestError(res.data?.info || '缺少响应数据')
+        throw new MiGuError(res.data?.info || '缺少响应数据')
       }
       console.log('data==============', res.data.data)
       return res.data.data
@@ -65,4 +66,3 @@ export class MusicService {
     )
   }
 }
-

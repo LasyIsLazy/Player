@@ -10,8 +10,7 @@ const len = computed(() => playerStore.collection?.list.length ?? 0)
 const visible = playListVisible
 
 const handlePlay = async (song: Song) => {
-  await playerStore.prepare(song.songId)
-  await playerStore.play()
+  await playerStore.play(song.songId)
 }
 </script>
 <template>

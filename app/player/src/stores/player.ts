@@ -68,6 +68,11 @@ export const usePlayerStore = defineStore('player', () => {
     return `${time2text(curTime.value)}/${time2text(duration.value)}`
   })
 
+  /**
+   * 准备下一首歌的所有信息
+   * @param songId 歌曲ID
+   * @param collectionId 歌单ID
+   */
   const prepare = async (songId: string, collectionId?: number) => {
     const { getSongInfo, getCollection } = useCollectionStore()
     let nextCollection: Collection
@@ -130,15 +135,21 @@ export const usePlayerStore = defineStore('player', () => {
   /**
    * 播放
    */
-  const play = () => {
+  const play = async (songId?: string, collectionId?: number) => {
+    console.log('play', songId, collectionId)
+    if (songId && playing.value?.data.raw.song.songId !== songId) {
+      // 要播放的不是当前歌曲，需要进行准备和切换
+      await prepare(songId, collectionId)
+      await switchNext()
+    }
     if (!playing.value) {
       return
     }
+    const sound = playing.value.sound
 
     const listenProgress = () => {
       curTime.value = sound.seek() ?? 0
       duration.value = sound.duration() ?? 0
-      console.log('howl progress')
       if (status.value !== PlayStatus.Playing) {
         sound.once('play', listenProgress)
         return
@@ -149,7 +160,6 @@ export const usePlayerStore = defineStore('player', () => {
 
     status.value = PlayStatus.Playing
 
-    const sound = playing.value.sound
     // 实际播放
     sound.play()
     console.log('play', playing.value)
@@ -176,6 +186,7 @@ export const usePlayerStore = defineStore('player', () => {
   }
 
   const switchPlay = () => {
+    console.log('switchPlay', status.value)
     if (!playing.value) {
       return
     }
@@ -263,15 +274,26 @@ export const usePlayerStore = defineStore('player', () => {
     nextPlay.value = undefined
   }
 
+  let failedCount = 0
+  // TODO: 改为配置项
+  const maxFailedCount = 5
+
   const next = async () => {
     // TODO: 支持多种模式
     const song = getRandomSong()
     if (!song) {
       return
     }
-    await prepare(song.songId)
-    await switchNext()
-    await play()
+    try {
+      await play(song.songId)
+    } catch (error) {
+      console.warn(error)
+      if (++failedCount < maxFailedCount) {
+        // TODO: 给个失败提示
+        // 失败后跳过（尝试下一首）
+        next()
+      }
+    }
     return song
   }
   const last = async () => {
