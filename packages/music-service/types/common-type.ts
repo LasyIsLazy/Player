@@ -1,3 +1,5 @@
+import { Lyrics } from '../lyrics'
+
 export interface Singer {
   id: string
   name: string
@@ -12,6 +14,7 @@ export interface SongDetail {
   mvId: string
   url: string
   cover: string
+  lyrics: Lyrics
   // mvCopyrightType: number;
   // ringToneId: string;
   // ringCopyrightId: string;

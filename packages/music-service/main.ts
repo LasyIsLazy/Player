@@ -1,4 +1,10 @@
-import { Client, getClient, RequestOptions } from '@tauri-apps/api/http'
+import {
+  Client,
+  getClient,
+  RequestOptions,
+  ResponseType,
+} from '@tauri-apps/api/http'
+import { Lyrics } from './lyrics'
 import { SongDetail } from './types/common-type'
 import { ListenUrlData } from './types/listen-url'
 import { PlaylistData } from './types/playlist'
@@ -20,10 +26,7 @@ class RequestError extends Error {}
 class MiGuError extends Error {}
 
 export class MusicService {
-  private client: Client | null
-  constructor() {
-    this.client = null
-  }
+  private client: Client | null = null
 
   /**
    * App的接口
@@ -126,7 +129,8 @@ export class MusicService {
         return { largePic: defaultCover }
       }),
     ])
-    console.log(listenUrlData, songPic)
+    const lyrics = await this.getLyrics(listenUrlData.lrcUrl)
+    console.log(listenUrlData, songPic, lyrics)
     return {
       ...listenUrlData,
       ...listenUrlData.song,
@@ -135,7 +139,20 @@ export class MusicService {
       // 目前还没找到该怎么解析成CDN链接
       // 所以再调个PC端接口拿封面
       cover: songPic.largePic || defaultCover,
+      lyrics,
     }
+  }
+
+  async getLyrics(link: string) {
+    if (!this.client) {
+      this.client = await getClient()
+    }
+    const lrc = (
+      await this.client.get<string>(link, {
+        responseType: ResponseType.Text,
+      })
+    ).data
+    return new Lyrics(lrc)
   }
 
   getSongPic(params: { songId: string }) {

@@ -5,6 +5,7 @@
     "esbuild",
     "iconfont",
     "lasy",
+    "migu",
     "pinia",
     "tauri",
     "vite"
