@@ -21,7 +21,8 @@
         "all": true,
         "request": true,
         "scope": [
-          "https://app.c.nf.migu.cn/*"
+          "https://app.c.nf.migu.cn/*",
+          "https://music.migu.cn/*"
         ]
       }
     },
