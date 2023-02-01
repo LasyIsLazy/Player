@@ -8,6 +8,7 @@ import SwitchIcon from '../icon/SwitchIcon.vue'
 import { togglePlayList } from '../play-list'
 import VolumeControl from './VolumeControl.vue'
 import ProgressBar from '../progress-bar/ProgressBar.vue'
+import PlayModeControl from './PlayModeControl.vue'
 
 const { collectionList, fetchCollectionDetail, init } = useCollectionStore()
 const playerStore = usePlayerStore()
@@ -58,6 +59,7 @@ const handlePlayList = () => {
         @click="handlePlayList"
       />
       <VolumeControl />
+      <PlayModeControl />
     </div>
     <ProgressBar
       direction="row"
@@ -83,7 +85,7 @@ const handlePlayList = () => {
 </template>
 <style scoped lang="scss">
 $controlIconSize: 40px;
-$extendIconAmount: 2;
+$extendIconAmount: 3;
 $extendIconSize: 30px;
 .music-control {
   padding: 0 20px;

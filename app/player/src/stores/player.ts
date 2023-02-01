@@ -4,19 +4,7 @@ import { useCollectionStore, Collection } from './collection'
 import { Howl } from 'howler'
 import { computed, ref } from 'vue'
 import { SongDetail } from 'music-service/types/common-type'
-// interface Singer {
-//   nameSpelling: string
-//   name: string
-//   avatar: string
-// }
-// interface Song {
-//   url: string
-//   songName: string
-//   cover: string
-//   raw: ListenUrlData
-//   collection: Collection
-//   singerList: Singer[]
-// }
+import { PlayMode } from '@/common/const'
 
 type Song = SongDetail & {
   collection: Collection
@@ -42,6 +30,7 @@ export const usePlayerStore = defineStore('player', () => {
   const volume = ref(0.5)
   const curTime = ref(0)
   const duration = ref(0)
+  const playMode = ref(PlayMode.All)
 
   const song = computed(() => playing.value?.data)
   const songName = computed(() => playing.value?.data.songName ?? '')
@@ -252,15 +241,31 @@ export const usePlayerStore = defineStore('player', () => {
     sound.volume(v)
   }
 
-  const getRandomSong = () => {
+  const getNextSong = () => {
     const collection = playing.value?.data.collection
     if (!collection?.list.length) {
       // collection中是空的
       return
     }
-    const song =
-      collection.list[Math.floor(Math.random() * collection.list.length)]
-    return song
+    switch (playMode.value) {
+      case PlayMode.All: {
+        const idx = collection.list.findIndex(
+          (val) => val.songId === playing.value?.data.songId
+        )
+        return collection.list[idx + 1] || collection.list[0]
+      }
+
+      case PlayMode.Random: {
+        return collection.list[
+          Math.floor(Math.random() * collection.list.length)
+        ]
+      }
+
+      default:
+        break
+    }
+
+    return
   }
 
   /**
@@ -287,8 +292,7 @@ export const usePlayerStore = defineStore('player', () => {
   const maxFailedCount = 5
 
   const next = async () => {
-    // TODO: 支持多种模式
-    const song = getRandomSong()
+    const song = getNextSong()
     if (!song) {
       return
     }
@@ -313,6 +317,7 @@ export const usePlayerStore = defineStore('player', () => {
     volume,
     curTime,
     duration,
+    playMode,
 
     song,
     singerName,
@@ -331,7 +336,6 @@ export const usePlayerStore = defineStore('player', () => {
     stop,
     seek,
     setVolume,
-    getRandomSong,
     switchNext,
     next,
     last,

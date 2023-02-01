@@ -1,6 +1,14 @@
 <script lang="ts" setup>
 defineProps<{
-  name: 'pause' | 'play' | 'next' | 'last' | 'list' | 'volume'
+  name:
+    | 'pause'
+    | 'play'
+    | 'next'
+    | 'last'
+    | 'list'
+    | 'volume'
+    | 'play-mode-random'
+    | 'play-mode-all'
 }>()
 </script>
 <template>
@@ -29,6 +37,14 @@ defineProps<{
     <use
       v-if="name === 'volume'"
       xlink:href="#iconfont-yinliang"
+    />
+    <use
+      v-if="name === 'play-mode-random'"
+      xlink:href="#iconfont-suijibofang"
+    />
+    <use
+      v-if="name === 'play-mode-all'"
+      xlink:href="#iconfont-shunxubofang"
     />
     <!-- cspell: enable -->
   </svg>

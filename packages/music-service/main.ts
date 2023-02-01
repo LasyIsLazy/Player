@@ -25,6 +25,10 @@ export class MusicService {
     this.client = null
   }
 
+  /**
+   * App的接口
+   * - 尽量使用App的接口，毕竟PC端的功能要少很多
+   */
   async get<T>(url: string, options?: RequestOptions) {
     if (!this.client) {
       this.client = await getClient()
@@ -43,6 +47,9 @@ export class MusicService {
     })
   }
 
+  /**
+   * PC端的接口
+   */
   async getV3<T>(url: string, options?: RequestOptions) {
     if (!this.client) {
       this.client = await getClient()
@@ -123,6 +130,10 @@ export class MusicService {
     return {
       ...listenUrlData,
       ...listenUrlData.song,
+      // listen-url接口获取到的封面是这样的string：
+      // 'prod/file-service/file-down01/8121e8df41a5c12f48b69aea89b71dab/b0af32293a3ec99b2f1f0f7aeb56b63a/9a38cbb2086a416c97981e1a808b4e17'
+      // 目前还没找到该怎么解析成CDN链接
+      // 所以再调个PC端接口拿封面
       cover: songPic.largePic || defaultCover,
     }
   }
