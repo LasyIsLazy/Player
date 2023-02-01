@@ -53,6 +53,8 @@ export const usePlayerStore = defineStore('player', () => {
     }
     return curTime.value / duration.value
   })
+  const lyrics = computed(() => playing.value?.data.lyrics)
+
   const time2text = (time: number) => {
     return (
       String(Math.floor(time / 60))
@@ -327,6 +329,7 @@ export const usePlayerStore = defineStore('player', () => {
     progress,
     progressText,
     collection,
+    lyrics,
 
     prepare,
     play,
