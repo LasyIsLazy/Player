@@ -28,6 +28,9 @@ export const usePlayerStore = defineStore('player', () => {
   const nextPlay = ref<PlayingSong>()
   const status = ref(PlayStatus.Stop)
   const volume = ref(0.5)
+  /**
+   * 当前播放的时刻（单位：秒）
+   */
   const curTime = ref(0)
   const duration = ref(0)
   const playMode = ref(PlayMode.All)
@@ -147,7 +150,7 @@ export const usePlayerStore = defineStore('player', () => {
     const sound = playing.value.sound
 
     const listenProgress = () => {
-      curTime.value = sound.seek() ?? 0
+      curTime.value = Number(sound.seek().toFixed(3)) ?? 0
       duration.value = sound.duration() ?? 0
       if (status.value !== PlayStatus.Playing) {
         sound.once('play', listenProgress)
