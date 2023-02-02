@@ -9,13 +9,23 @@ const curIdx = computed(() => {
   if (!lyrics.value) {
     return -1
   }
-  let cur = 0
+  let cur = -1
   for (let index = 0; index < lyrics.value.lyricLines.length; index++) {
     const { time } = lyrics.value.lyricLines[index]
-    if (time >= curTime.value * 1000) {
+    if (time > curTime.value * 1000) {
+      // 这一行还没开始
+      cur = index - 1
+      break
+    }
+    if (time === curTime.value * 1000) {
+      // 刚好到这一行
       cur = index
       break
     }
+  }
+  if (cur === -1) {
+    // 最后一行
+    return lyrics.value.lyricLines.length - 1
   }
   return cur
 })
@@ -46,7 +56,7 @@ const positionStyle = computed(() => {
         :key="time + text"
         :class="getClass(idx)"
       >
-        {{ time }} - {{ text }}
+        {{ text }}
       </div>
     </div>
   </div>
