@@ -13,7 +13,7 @@ const curIdx = computed(() => {
   for (let index = 0; index < lyrics.value.lyricLines.length; index++) {
     const { time } = lyrics.value.lyricLines[index]
     if (time >= curTime.value * 1000) {
-      cur = index - 1
+      cur = index
       break
     }
   }
@@ -28,25 +28,31 @@ const getClass = (idx: number) => {
   }
   return 'current'
 }
+const positionStyle = computed(() => {
+  return {
+    top: `calc(50% - ${curIdx.value * 24}px - 12px)`,
+  }
+})
 </script>
 
 <template>
   <div class="lyric-panel">
-    {{ curTime * 1000 }}
     <div
-      v-for="({ text, time }, idx) in lyrics?.lyricLines"
-      :key="time + text"
-      :class="getClass(idx)"
+      class="container"
+      :style="positionStyle"
     >
-      {{ time }} - {{ text }}
+      <div
+        v-for="({ text, time }, idx) in lyrics?.lyricLines"
+        :key="time + text"
+        :class="getClass(idx)"
+      >
+        {{ time }} - {{ text }}
+      </div>
     </div>
   </div>
 </template>
 
-<style lang="scss">
-main {
-  overflow: auto;
-}
+<style lang="scss" scoped>
 .going {
   color: black;
 }
@@ -55,5 +61,8 @@ main {
 }
 .current {
   color: green;
+}
+.container {
+  position: relative;
 }
 </style>

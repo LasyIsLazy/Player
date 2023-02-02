@@ -40,6 +40,7 @@ aside {
 }
 main {
   grid-area: main;
+  overflow: hidden;
 }
 footer {
   grid-area: footer;
