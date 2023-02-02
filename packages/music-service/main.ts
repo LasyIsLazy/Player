@@ -111,7 +111,11 @@ export class MusicService {
           channel: '0146921',
         },
       }
-    )
+    ).then((data) => {
+      // 避免HTTP请求被拦截（如Mac应用内未配置的话不允许HTTP）
+      data.url = data.url.replace('http', 'https')
+      return data
+    })
   }
 
   async getSongDetail(params: {
