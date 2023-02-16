@@ -1,0 +1,86 @@
+{
+  "id": "3866450",
+  "name": "player",
+  "font_family": "iconfont",
+  "css_prefix_text": "iconfont-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "18963837",
+      "name": "顺序播放",
+      "font_class": "shunxubofang",
+      "unicode": "e6a1",
+      "unicode_decimal": 59041
+    },
+    {
+      "icon_id": "33711681",
+      "name": "随机播放",
+      "font_class": "suijibofang",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "18960322",
+      "name": "播放队列",
+      "font_class": "bofangduilie",
+      "unicode": "e699",
+      "unicode_decimal": 59033
+    },
+    {
+      "icon_id": "31314850",
+      "name": "点赞-实心",
+      "font_class": "dianzan-shixin",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "31314853",
+      "name": "点赞-线框",
+      "font_class": "dianzan-xiankuang",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "31314860",
+      "name": "暂停",
+      "font_class": "zanting",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "31314862",
+      "name": "播放",
+      "font_class": "bofang",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "31314864",
+      "name": "静音",
+      "font_class": "jingyin",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "31314866",
+      "name": "上一集",
+      "font_class": "shangyiji",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "31314867",
+      "name": "下一集",
+      "font_class": "xiayiji",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "31314868",
+      "name": "音量",
+      "font_class": "yinliang",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    }
+  ]
+}

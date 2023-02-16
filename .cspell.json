@@ -1,0 +1,17 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "esbuild",
+    "iconfont",
+    "lasy",
+    "migu",
+    "pinia",
+    "tauri",
+    "vite"
+  ],
+  "ignorePaths": [
+    "packages/music-service/types",
+    "app/player/src/assets/iconfont"
+  ]
+}
